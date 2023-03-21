@@ -1,4 +1,7 @@
 .env
+.envrc
 raw_data
 notebooks
 **params
+.DS_Store
+athens_extreme_heat.egg-info/
