@@ -76,4 +76,4 @@ def preprocess_excel_data(filepath_directory):
 
 if __name__ == '__main__':
     df = preprocess_excel_data(LOCAL_RAW_DATA_DIR)
-    df.to_csv('data/merged_data.csv',index=False)
+    df.to_csv(os.path.join(LOCAL_DATA_DIR,'processed_cencus.csv'),index=False)
