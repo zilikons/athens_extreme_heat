@@ -1,9 +1,10 @@
 import pandas as pd
+import geopandas as gpd
 import os
 import re
 from extreme_heat.main_interface.params import *
 
-def rename_excel_columns(filepath: str):
+def rename_excel_columns(filepath: str) -> pd.DataFrame:
     '''
     This function takes the excel filepath and renames the columns, depending on the file name
     '''
@@ -32,7 +33,7 @@ def rename_excel_columns(filepath: str):
         df.columns = ['code','desc','description','greek','greek_and_other','developed_eu','developed_east_eu','developed_non_eu','developing_east_eu','developing_na_me','other_non_eu','no_nation','no_answer','total']
     return df
 
-def merge_dataframes(list_of_dataframes: list):
+def merge_dataframes(list_of_dataframes: list) -> pd.DataFrame:
     '''
     This function takes a list of dataframes and merges them into one
     '''
@@ -43,7 +44,7 @@ def merge_dataframes(list_of_dataframes: list):
         df = df.merge(list_of_dataframes[i],on='code',how='inner')
     return df
 
-def create_list_of_filepaths(filepath_directory):
+def create_list_of_filepaths(filepath_directory:str) -> list:
     '''
     This function takes the filepath of the directory and creates a list of filepaths
     '''
@@ -55,7 +56,15 @@ def create_list_of_filepaths(filepath_directory):
     list_of_filepaths.remove('7_2011_15Types.xls')
     return list_of_filepaths
 
-def preprocess_excel_data(filepath_directory):
+def prepare_shapefile(filepath:str) -> gpd.GeoDataFrame:
+    shape = gpd.read_file(filepath)
+    shape = shape.drop(2999)
+    shape = shape[['MOXAP','geometry']]
+    shape.columns = ['code','geometry']
+    shape['code'] = shape['code'].astype('int32')
+    return shape
+
+def preprocess_excel_data(filepath_directory:str,shapefilepath:str) -> pd.DataFrame:
     '''
     This function takes the filepath of the directory and creates a list of filepaths
     '''
@@ -72,8 +81,10 @@ def preprocess_excel_data(filepath_directory):
         list_of_dataframes.append(df)
     # Merge the dataframes
     df = merge_dataframes(list_of_dataframes)
-    return df
+    gdf = prepare_shapefile(shapefilepath)
+    gdf = gdf.merge(df,on='code',how='inner')
+    return gdf
 
 if __name__ == '__main__':
-    df = preprocess_excel_data(LOCAL_RAW_DATA_DIR)
-    df.to_csv(os.path.join(LOCAL_DATA_DIR,'processed_cencus.csv'),index=False)
+    gdf = preprocess_excel_data(LOCAL_RAW_DATA_DIR, LOCAL_RAW_DATA_DIR + 'MOXAP/Moxap_tx132.shp')
+    gdf.to_file(LOCAL_DATA_DIR + '/data.json', driver='GeoJSON')
