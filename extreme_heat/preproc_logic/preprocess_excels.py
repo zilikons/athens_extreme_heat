@@ -20,15 +20,15 @@ def rename_excel_columns(filepath: str) -> pd.DataFrame:
         df.columns = ['code','desc','description','to_14','to_24','to_34','to_44','to_54','to_64','to_74',
                       'from_75','total']
     if file_name == '3_2011_Kyria_Pigi_Poron':
-        df.columns = ['code','desc','description','work','investments','retirement','subsidies','loans_saving','dependant','other','total']
+        df.columns = ['code','desc','description','work','investments','retirement','subsidies','loans_saving','dependant','other_income','total']
     if file_name == '4_2011_Enoikisi':
-        df.columns = ['code','desc','description','owner','part_owner','rent','other','communal','total']
+        df.columns = ['code','desc','description','owner','part_owner','rent','other_housing_situation','communal_housing','total']
     if file_name == '5_2011_sqr_m':
         df.columns = ['code','desc','description','to_30','to_50','to_70','to_90','to_120','to_150','to_200','to_300','from_300','communal_or_other','total']
     if file_name == '6_2011_Construction':
-        df.columns = ['code','desc','description','before_1919','from_1919_to_1945','from_1946_to_1960','from_1961_to_1970','from_1971_to_1980','from_1981_to_1990','from_1991_to_2000','from_2001_to_2005','after_2005','non_normal','communal_or_other','total']
+        df.columns = ['code','desc','description','before_1919','from_1919_to_1945','from_1946_to_1960','from_1961_to_1970','from_1971_to_1980','from_1981_to_1990','from_1991_to_2000','from_2001_to_2005','after_2005','non_normal','communal_or_other_situation','total']
     if file_name == '8_2011_Unemployment':
-        df.columns = ['code','desc','description','employed','looking_for_work','first_time_looking','student','retired','independent','housework','other','total']
+        df.columns = ['code','desc','description','employed','looking_for_work','first_time_looking','student','retired','independent','housework','other_employ','total']
     if file_name == '9_2011_Nationality':
         df.columns = ['code','desc','description','greek','greek_and_other','developed_eu','developed_east_eu','developed_non_eu','developing_east_eu','developing_na_me','other_non_eu','no_nation','no_answer','total']
     return df
@@ -86,5 +86,5 @@ def preprocess_excel_data(filepath_directory:str,shapefilepath:str) -> pd.DataFr
     return gdf
 
 if __name__ == '__main__':
-    gdf = preprocess_excel_data(LOCAL_RAW_DATA_DIR, LOCAL_RAW_DATA_DIR + 'MOXAP/Moxap_tx132.shp')
-    gdf.to_file(LOCAL_DATA_DIR + '/data.json', driver='GeoJSON')
+    gdf = preprocess_excel_data(LOCAL_RAW_DATA_DIR, LOCAL_RAW_DATA_DIR + '/MOXAP/Moxap_tx132.shp')
+    gdf.to_file(LOCAL_DATA_DIR + '/census_data.json', driver='GeoJSON')

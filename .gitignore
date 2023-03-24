@@ -6,3 +6,13 @@ notebooks
 .DS_Store
 athens_extreme_heat.egg-info/
 __pycache__/
+factor_analysis.aux
+factor_analysis.bbl
+factor_analysis.bib
+factor_analysis.blg
+factor_analysis.fdb_latexmk
+factor_analysis.fls
+factor_analysis.log
+factor_analysis.synctex.gz
+factor_analysis.tex
+figs/

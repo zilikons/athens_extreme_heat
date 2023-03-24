@@ -4,3 +4,5 @@ numpy
 rasterio
 plotly
 matplotlib
+scikit-learn
+factor_analyzer
