@@ -28,7 +28,11 @@ def heat_index(input_temperature, relative_humidity, input_units="celsius"):
     A_index = -10.3 + 1.1 * temperature_fahrenheit + 0.047 * relative_humidity
     if A_index < 79:
         #print("A Index is below 79, returning input temperature")
-        return fahrenheit_to_celsius(A_index)
+        if input_units == "celsius":
+            return fahrenheit_to_celsius(A_index)
+        if input_units == "kelvin":
+            return celsius_to_kelvin(fahrenheit_to_celsius(A_index))
+        return A_index
     heat_index_fahrenheit = (
         -42.379
         + 2.04901523 * temperature_fahrenheit
