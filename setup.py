@@ -10,7 +10,7 @@ setup(name='athens_extreme_heat',
       description="Extreme Heat Vulnerability Analysis for Athens, Greece",
       license="MIT",
       author="Konstantinos Ziliaskopoulos",
-      url="https://github.com/zilikons/athens_extreme_heat",
+      #url="https://github.com/zilikons/athens_extreme_heat",
       install_requires=requirements,
       packages=find_packages(),
       # include_package_data: to install data from MANIFEST.in
